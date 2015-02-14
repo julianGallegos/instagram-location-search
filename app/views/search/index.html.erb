@@ -1,0 +1,45 @@
+<p id="token" style="visibility: hidden"><%= session['access_token'] %></p>
+
+Latitude:<br>
+<input id="lat" type="text" name="lat">
+<br>
+Longitude:<br>
+<input id="lon" type="text" name="lon"><br><br>
+
+<button id="button" type="button">Search</button>
+
+
+<div class='results'>
+
+</div>
+
+<script>
+
+	// $("#button").click(function(){
+	// 	var lat = $('#lat').val();
+	// 	var lon = $('#lon').val();
+	// 	var token = "<%= session['access_token'] %>"
+	// 	getResults(lat,lon,token);
+	// 	console.log(token)
+	// });
+
+	// function getResults(lat,lon,token) {
+
+	// 	var request = $.ajax({
+	// 	  url: "/results",
+	// 	  type: "POST",
+	// 	  data: {lat:lat, lon:lon, access_token:token},
+	// 	  dataType: "json"
+	// 	});
+
+	// 	request.done(function(msg) {
+	// 		console.log("It worked");
+	// 	  $("#button").html( msg );
+	// 	});
+
+	// 	request.fail(function(jqXHR, textStatus) {
+	// 	  alert( "Request failed: " + textStatus );
+	// 	});
+
+	// }
+ </script>

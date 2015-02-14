@@ -1,0 +1,10 @@
+<br>
+<br>
+
+<% if session[:token] %>
+  Welcome <%= session[:name] %>!<br>
+  Token = <%= session[:token] %><br>
+  <%= link_to "Sign Out", signout_path %>
+<% else %>
+  <%= link_to "Sign in with Instagram", "/auth/instagram" %>
+<% end %>
