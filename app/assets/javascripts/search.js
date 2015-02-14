@@ -44,15 +44,20 @@ Model.prototype.enterSearch = function(){
 
 function View(){
 this.searchButton = "#button"
+this.resetButton = "#reset"
 this.lat = "#lat"
 this.longitute = "#lon"
 this.token = "#token"
+this.results = ".results"
 }
 
 View.prototype.getParamCoordinates = function(){
 	console.log('getting user input')
 }
 
+View.prototype.resetSearch = function(){
+	$(this.results).html('')
+}
 
 
 
@@ -76,10 +81,8 @@ Controller.prototype.getInstagramPictures = function(){
 
 		request.done(function(msg) {
 			console.log(msg);
-			debugger
 			for (var i = 0; i < msg.data.length; i ++){
-
-		  $(".results").append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
+		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
 			}
 		});
 
@@ -89,8 +92,13 @@ Controller.prototype.getInstagramPictures = function(){
 
 	}
 
+Controller.prototype.clearResults = function(){
+	this.view.resetSearch();
+}
+
 Controller.prototype.createEventHandlers = function(){
 	$(this.view.searchButton).on('click', this.getInstagramPictures.bind(this));
+	$(this.view.resetButton). on('click', this.clearResults.bind(this));
 }
 
 
