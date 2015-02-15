@@ -3,7 +3,7 @@ class CoordinatesController < ApplicationController
 
 	def search_coordinates
 
-		location = add_plus_sign(params[:location])
+		location = params[:location]
 
 		p "these are the params #{location}"
 
@@ -23,15 +23,15 @@ class CoordinatesController < ApplicationController
 		render json: response
 	end
 
-	def add_plus_sign(input_params)
-		p split_string = input_params.split(" ")
-		split_string.each do |char|
-			if char == ""
-				char = "+"
-			end
-		end
-		p split_string.join("")
-	end
+	# def add_plus_sign(input_params)
+	# 	p split_string = input_params.split(" ")
+	# 	split_string.each do |char|
+	# 		if char == ""
+	# 			char = "+"
+	# 		end
+	# 	end
+	# 	p split_string.join("")
+	# end	
 
 
 end

@@ -57,7 +57,7 @@ View.prototype.getParamCoordinates = function(){
 }
 
 View.prototype.getUserSearchInput = function(){
-	$(this.locationSearch).val()
+	encodeURIComponent($(this.locationSearch).val())
 }
 
 View.prototype.resetSearch = function(){
@@ -74,26 +74,26 @@ function Controller(model, view){
 	this.view = view;
 }
 
-Controller.prototype.getInstagramPictures = function(){
-		var request = $.ajax({
-			url: "/results",
-			type: "POST",
-			data: {lat:$(this.view.lat).val() , lon:$(this.view.longitute).val() , access_token:$(this.view.token).text() },
-			dataType: "json"
-			});
+// Controller.prototype.getInstagramPictures = function(){
+// 		var request = $.ajax({
+// 			url: "/results",
+// 			type: "POST",
+// 			data: {lat:$(this.view.lat).val() , lon:$(this.view.longitute).val() , access_token:$(this.view.token).text() },
+// 			dataType: "json"
+// 			});
 
-		request.done(function(msg) {
-			console.log(msg);
-			for (var i = 0; i < msg.data.length; i ++){
-		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
-			}
-		});
+// 		request.done(function(msg) {
+// 			console.log(msg);
+// 			for (var i = 0; i < msg.data.length; i ++){
+// 		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
+// 			}
+// 		});
 
 // 		request.fail(function(jqXHR, textStatus) {
 // 		  alert( "Request failed: " + textStatus );
 // 		});
 
-	}
+	// }
 
 Controller.prototype.clearResults = function(){
 	this.view.resetSearch();
@@ -104,12 +104,24 @@ Controller.prototype.getLocationInput = function(){
 	var request = $.ajax({
 		url: "/coordinates",
 		type: "GET",
-		data: {location:$(this.view.locationSearch).val()},
+		data: {location: encodeURIComponent($(this.view.locationSearch).val())},
+		
 		dataType: "json"
 	});
-	request.done(function(results){
-		console.log("it's done")
-		console.log(results)
+	request.done(function(event){
+		var secondRequest = $.ajax({
+			url: "/results",
+			type: "POST",
+			// for some reason the scope of this.view can't be reached inside of this ajax call
+			// had to find token by using jquery rather than the view
+			data: {lat:(event.results[0].geometry.location.lat), lon:(event.results[0].geometry.location.lng), access_token:$('#token').text()},
+			dataType: "json"
+		})
+		secondRequest.done(function(msg){
+			for (var i = 0; i < msg.data.length; i ++){
+		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
+			}
+		})
 	});	
 }
 
