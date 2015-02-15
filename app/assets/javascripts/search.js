@@ -81,6 +81,7 @@ Controller.prototype.getInstagramPictures = function(){
 
 		request.done(function(msg) {
 			console.log(msg);
+			debugger
 			for (var i = 0; i < msg.data.length; i ++){
 		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
 			}
