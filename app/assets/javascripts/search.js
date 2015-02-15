@@ -56,9 +56,9 @@ View.prototype.getParamCoordinates = function(){
 	console.log('getting user input')
 }
 
-// View.prototype.getUserSearchInput = function(){
-// 	return $(this.locationSearch).val()
-// }
+View.prototype.getUserSearchInput = function(){
+	$(this.locationSearch).val()
+}
 
 View.prototype.resetSearch = function(){
 	$(this.results).html('')

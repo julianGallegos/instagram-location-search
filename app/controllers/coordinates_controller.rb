@@ -3,7 +3,9 @@ class CoordinatesController < ApplicationController
 
 	def search_coordinates
 
-		p location = params[:location]
+		location = add_plus_sign(params[:location])
+
+		p "these are the params #{location}"
 
 		# need to figure out a way to get parameter like san fran to appear as san+fran from input parameters
 
@@ -13,7 +15,7 @@ class CoordinatesController < ApplicationController
 	  api_key = ENV['google_maps_api']
 
 
-	  url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location}&key=#{api_key}"
+	  p url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location}&key=#{api_key}"
 		
 		response = HTTParty.get(url)
 
@@ -21,6 +23,15 @@ class CoordinatesController < ApplicationController
 		render json: response
 	end
 
-	private
+	def add_plus_sign(input_params)
+		p split_string = input_params.split(" ")
+		split_string.each do |char|
+			if char == ""
+				char = "+"
+			end
+		end
+		p split_string.join("")
+	end
+
 
 end
