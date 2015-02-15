@@ -49,11 +49,16 @@ this.lat = "#lat"
 this.longitute = "#lon"
 this.token = "#token"
 this.results = ".results"
+this.locationSearch ="#locationSearch"
 }
 
 View.prototype.getParamCoordinates = function(){
 	console.log('getting user input')
 }
+
+// View.prototype.getUserSearchInput = function(){
+// 	return $(this.locationSearch).val()
+// }
 
 View.prototype.resetSearch = function(){
 	$(this.results).html('')
@@ -70,8 +75,6 @@ function Controller(model, view){
 }
 
 Controller.prototype.getInstagramPictures = function(){
-		console.log('making request')
-		
 		var request = $.ajax({
 			url: "/results",
 			type: "POST",
@@ -81,7 +84,6 @@ Controller.prototype.getInstagramPictures = function(){
 
 		request.done(function(msg) {
 			console.log(msg);
-			debugger
 			for (var i = 0; i < msg.data.length; i ++){
 		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
 			}
@@ -97,8 +99,23 @@ Controller.prototype.clearResults = function(){
 	this.view.resetSearch();
 }
 
+Controller.prototype.getLocationInput = function(){
+	console.log("using google maps api")
+	var request = $.ajax({
+		url: "/coordinates",
+		type: "GET",
+		data: {location:$(this.view.locationSearch).val()},
+		dataType: "json"
+	});
+	request.done(function(results){
+		console.log("it's done")
+		console.log(results)
+	});	
+}
+
 Controller.prototype.createEventHandlers = function(){
-	$(this.view.searchButton).on('click', this.getInstagramPictures.bind(this));
+	// $(this.view.searchButton).on('click', this.getInstagramPictures.bind(this));
+	$(this.view.searchButton).on('click', this.getLocationInput.bind(this));
 	$(this.view.resetButton). on('click', this.clearResults.bind(this));
 }
 
