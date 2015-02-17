@@ -1,3 +1,30 @@
+// 	$("#button").click(function(){
+// 		var lat = $('#lat').val();
+// 		var lon = $('#lon').val();
+// 		var token = "<%= session['access_token'] %>"
+// 		getResults(lat,lon,token);
+
+// 	});
+
+// 	function getResults(lat,lon,token) {
+
+// 		var request = $.ajax({
+// 		  url: "/results",
+// 		  type: "POST",
+// 		  data: {lat:lat, lon:lon, access_token:token},
+// 		  dataType: "json"
+// 		});
+
+// 		request.done(function(msg) {
+// 			console.log("It worked");
+// 		  $("#button").html( msg );
+// 		});
+
+// 		request.fail(function(jqXHR, textStatus) {
+// 		  alert( "Request failed: " + textStatus );
+// 		});
+
+// 	}
 //===============================MODELS=============================
 
 function Model(){
@@ -81,6 +108,7 @@ Controller.prototype.getLocationInput = function(){
 			dataType: "json"
 		})
 		secondRequestToInstagram.done(function(msg){
+			debugger
 			console.log(msg)
 			for (var i = 0; i < msg.data.length; i ++){
 		  $('.results').append('<img class="instagram_pics col-md-4" src=' + msg.data[i].images.standard_resolution.url + '>');
@@ -100,4 +128,15 @@ $(document).ready(function(){
 		var myInstagramSearch = new Controller(new Model(), new View());
 		myInstagramSearch.createEventHandlers();
 })
+
+
+
+Latitude:<br>
+<input id="lat" type="text" name="lat">
+<br>
+Longitude:<br>
+<input id="lon" type="text" name="lon"><br><br>
+
+<button id="button" type="button">Search</button>
+
 
