@@ -3,3 +3,7 @@ Instagram Location Search
 Rails as an API for Backend 
 
 MVC JavaScript and JQuery for Front End
+
+The app makes an ajax request the Google maps API to get the coordinates of the location the user wants to see instagram images for.
+
+After getting the coordinates from Google Maps API, a second ajax request is made with those coordinates as the search parameters to the Instagram API.
