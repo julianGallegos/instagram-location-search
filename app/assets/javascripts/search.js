@@ -1,35 +1,3 @@
-// 	$("#button").click(function(){
-// 		var lat = $('#lat').val();
-// 		var lon = $('#lon').val();
-// 		var token = "<%= session['access_token'] %>"
-// 		getResults(lat,lon,token);
-// 		console.log(token)
-// 	});
-
-// 	function getResults(lat,lon,token) {
-
-// 		var request = $.ajax({
-// 		  url: "/results",
-// 		  type: "POST",
-// 		  data: {lat:lat, lon:lon, access_token:token},
-// 		  dataType: "json"
-// 		});
-
-// 		request.done(function(msg) {
-// 			console.log("It worked");
-// 		  $("#button").html( msg );
-// 		});
-
-// 		request.fail(function(jqXHR, textStatus) {
-// 		  alert( "Request failed: " + textStatus );
-// 		});
-
-// 	}
-
-
-
-
-
 //===============================MODELS=============================
 
 function Model(){
@@ -50,6 +18,7 @@ this.longitute = "#lon"
 this.token = "#token"
 this.results = ".results"
 this.locationSearch ="#locationSearch"
+this.instagram_pics_rendered = "#results .instagram_pics"
 }
 
 View.prototype.getParamCoordinates = function(){
@@ -64,6 +33,16 @@ View.prototype.resetSearch = function(){
 	$(this.results).html('')
 }
 
+View.prototype.showInstagramInfo = function(){
+	console.log("showing instagram stuff")
+	// $('.names a').on('mouseenter', function(evt){
+ //    $('.popup').css({left: evt.pageX+30, top: evt.pageY-15}).show();
+ //    $(this).on('mouseleave', function(){
+ //        $('.popup').hide();
+    // });
+// });
+}
+
 
 
 //===============================CONTROLLER=============================
@@ -74,43 +53,26 @@ function Controller(model, view){
 	this.view = view;
 }
 
-// Controller.prototype.getInstagramPictures = function(){
-// 		var request = $.ajax({
-// 			url: "/results",
-// 			type: "POST",
-// 			data: {lat:$(this.view.lat).val() , lon:$(this.view.longitute).val() , access_token:$(this.view.token).text() },
-// 			dataType: "json"
-// 			});
-
-// 		request.done(function(msg) {
-// 			console.log(msg);
-// 			for (var i = 0; i < msg.data.length; i ++){
-// 		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
-// 			}
-// 		});
-
-// 		request.fail(function(jqXHR, textStatus) {
-// 		  alert( "Request failed: " + textStatus );
-// 		});
-
-	// }
-
 Controller.prototype.clearResults = function(){
 	this.view.resetSearch();
 }
 
+Controller.prototype.displayInstagramInfo = function(){
+	this.view.showInstagramInfo()
+}
+
 Controller.prototype.getLocationInput = function(){
 	console.log("using google maps api")
-	var request = $.ajax({
+	var requestToGoogleMaps = $.ajax({
 		url: "/coordinates",
 		type: "GET",
 		data: {location: encodeURIComponent($(this.view.locationSearch).val())},
 		
 		dataType: "json"
 	});
-	request.done(function(event){
+	requestToGoogleMaps.done(function(event){
 		console.log(event.results[0].geometry)
-		var secondRequest = $.ajax({
+		var secondRequestToInstagram = $.ajax({
 			url: "/results",
 			type: "POST",
 			// for some reason the scope of this.view can't be reached inside of this ajax call
@@ -118,7 +80,8 @@ Controller.prototype.getLocationInput = function(){
 			data: {lat:(event.results[0].geometry.location.lat), lon:(event.results[0].geometry.location.lng), access_token:$('#token').text()},
 			dataType: "json"
 		})
-		secondRequest.done(function(msg){
+		secondRequestToInstagram.done(function(msg){
+			console.log(msg)
 			for (var i = 0; i < msg.data.length; i ++){
 		  $('.results').append('<img class="instagram_pics col-md-4" src=' + msg.data[i].images.standard_resolution.url + '>');
 			}
@@ -127,9 +90,9 @@ Controller.prototype.getLocationInput = function(){
 }
 
 Controller.prototype.createEventHandlers = function(){
-	// $(this.view.searchButton).on('click', this.getInstagramPictures.bind(this));
 	$(this.view.searchButton).on('click', this.getLocationInput.bind(this));
-	$(this.view.resetButton). on('click', this.clearResults.bind(this));
+	$(this.view.resetButton).on('click', this.clearResults.bind(this));
+	$(this.view.results).hover(this.displayInstagramInfo.bind(this))
 }
 
 
