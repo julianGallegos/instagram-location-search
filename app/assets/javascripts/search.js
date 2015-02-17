@@ -120,7 +120,7 @@ Controller.prototype.getLocationInput = function(){
 		})
 		secondRequest.done(function(msg){
 			for (var i = 0; i < msg.data.length; i ++){
-		  $('.results').append('<img src=' + msg.data[i].images.standard_resolution.url + '>');
+		  $('.results').append('<img class="instagram_pics col-md-4" src=' + msg.data[i].images.standard_resolution.url + '>');
 			}
 		})
 	});	
