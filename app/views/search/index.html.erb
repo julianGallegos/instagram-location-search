@@ -1,19 +1,22 @@
 <p id="token" style="visibility: hidden"><%= session['access_token'] %></p>
 
-<h3>Disneyland Coordinates: 33.8090 & 117.9190</h3>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center"><p>Welcome to Instagram Searcher</p></div>
+	</div>
+</div>
 
-Location to Search:<br>
-<input id="locationSearch" type="text" name="locationSearch"><br><br>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center">
+					<p>Locations to search</p>
+			<input id="locationSearch" type="text" name="locationSearch"><br><br>
+			<button id="button" type="button">Search</button>
+			<button id="reset" type="buton">Reset</button>
+		</div>
 
-Latitude:<br>
-<input id="lat" type="text" name="lat">
-<br>
-Longitude:<br>
-<input id="lon" type="text" name="lon"><br><br>
-
-<button id="button" type="button">Search</button>
-
-<button id="reset" type="buton">Reset</button>
+	</div>
+</div>
 
 <div class='results'>
 

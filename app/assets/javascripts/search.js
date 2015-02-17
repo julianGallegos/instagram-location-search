@@ -109,6 +109,7 @@ Controller.prototype.getLocationInput = function(){
 		dataType: "json"
 	});
 	request.done(function(event){
+		console.log(event.results[0].geometry)
 		var secondRequest = $.ajax({
 			url: "/results",
 			type: "POST",
