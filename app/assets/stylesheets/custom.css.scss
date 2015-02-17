@@ -1,5 +1,20 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
+body {
+	background-color:#222 !important;
+}
 .top-buffer { margin-top:20px; }
 
+.headline {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	font-size: 36px;
+	color: #fff;
+}
+
+.description{
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	font-size: 24px;
+	color: #fff;
+}
