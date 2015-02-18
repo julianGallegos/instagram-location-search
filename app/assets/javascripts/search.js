@@ -131,12 +131,4 @@ $(document).ready(function(){
 
 
 
-Latitude:<br>
-<input id="lat" type="text" name="lat">
-<br>
-Longitude:<br>
-<input id="lon" type="text" name="lon"><br><br>
-
-<button id="button" type="button">Search</button>
-
 
