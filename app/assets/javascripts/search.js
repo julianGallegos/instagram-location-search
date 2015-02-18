@@ -124,6 +124,7 @@ Controller.prototype.createEventHandlers = function(){
 }
 
 
+
 $(document).ready(function(){
 		var myInstagramSearch = new Controller(new Model(), new View());
 		myInstagramSearch.createEventHandlers();
